@@ -1,21 +1,24 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <body>
-<h1>Ludzu ievadi jaunu produktu: </h1>
-	<form method="post" th:object="${product}" th:action="@{/add}">
+<h1>Lūdzu ievadi jaunu produktu:</h1>
+	<form method="post" th:object="${product}" th:action="@{/add}"  >
 		
 		<p>Ievadi nosaukumu</p>
-		<input type="text" th:field="*{title}">
+		<input type="text" th:field="*{title}"/> 
 		<p>Ievadi cenu</p>
-		<input type="text" th:field="*{price}">
+		<input type="text" th:field="*{price}"/> 
 		<p>Ievadi kategoriju</p>
-		<input type="text" th:field="*{category}">
+		<select class="form-control" id="dropDownList">
+		    <option value="0">select option</option>
+		    <option th:each="category : ${categories}" th:value="${category}" th:text="${category}" th:field="*{category}"></option>
+		</select>
 		<p>Ievadi aprakstu</p>
-		<input type="text" th:field="*{description}">
+		<input type="text" th:field="*{description}"/> 
 		<p>Ievadi daudzumu</p>
-		<input type="text" th:field="*{quantity}">
+		<input type="text" th:field="*{quantity}"/> 
 		
-		<button type="submit">Saglabat produktu</button>
-	</form>
+		<button type="submit" >Saglabāt produktu</button>		
+	</form>	
 	
 </body>
 </html>
