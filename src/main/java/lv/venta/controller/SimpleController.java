@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lv.venta.model.Category;
 import lv.venta.model.Product;
@@ -77,7 +78,28 @@ public class SimpleController {
 		
 	}
 	
-	//iesakuma parada lapu kura vares ievadit jaunu produktu. Lidzi lapai padodam tuksu produktu
+	@GetMapping("/allproducts")//localhost:8080/allproducts?id=1
+	public String getGetAllProducts2ById(@RequestParam(name = "id") int id, Model model)
+	{
+		if(id < 0) {
+			model.addAttribute("package", "Produkta id nevar būt negatīvs");
+			return "error-page";//šī koda rinda parādīs error-page.html lapu ar ziņū, ka id nevar būt negatīvs
+		}
+		
+		for(Product tempP : allProducts) {
+			if(tempP.getId()==id) {
+				model.addAttribute("package", tempP);
+				return "show-one-product";//sī koda rinda parādīs show-one-product.html lapu
+			}
+		}
+		
+		model.addAttribute("package", "Produkts ar tādu id neeksistē");
+		return "error-page";
+		
+		
+	}
+	
+	//iesākumā parāda lapu, kurā varēs ievadīt jaunu produktu. Līdzi lapai padodam tukšu produktu
 	@GetMapping("/add") //localhost:8080/add
 	public String getAddProduct(Model model) {
 		model.addAttribute("product", new Product());
@@ -85,10 +107,11 @@ public class SimpleController {
 	}
 	
 	
-	//pec submit pogas nospiesanas html puse sanemam jau aizpilditu produktu
+	
+	//pēc submit pogas nospiešanas html pusē, saņemam jau aizpildītu produktu
 	@PostMapping("/add")
 	public String postAddProduct(Product product) {
-		//TODO veikt validacijas
+		//TODO veikt validācijas un uzstādīt id
 		System.out.println(product);
 		
 		Product newProduct = new Product(product.getTitle(), product.getPrice(), product.getDescription(),
@@ -97,6 +120,61 @@ public class SimpleController {
 		allProducts.add(newProduct);
 		return "redirect:/getallproducts";
 	}
+	
+	
+	
+	//izveidot getmapping funkciju uz /update/id
+	@GetMapping("/update")//localhost:8080/update?id=1
+	// funkcijas deklarācija ar @PathVariable un Model
+	public String getUpdateProductById(@RequestParam(name = "id") int id, Model model)
+	{
+		// parliecinaties, ka id ir pozitīvs, ja nav, tad uz error lapu parmest
+		if(id < 0) {
+			model.addAttribute("package", "Produkta id nevar būt negatīvs");
+			return "error-page";//šī koda rinda parādīs error-page.html lapu ar ziņū, ka id nevar būt negatīvs
+		}
+		
+		for(Product tempP : allProducts) {
+			if(tempP.getId() == id) {
+				model.addAttribute("product", tempP);
+				return "update-one-product";
+			}
+		}
+		
+		model.addAttribute("package", "Produkts ar tādu id neeksistē");
+		return "error-page";
+		
+	}
+	
+	//dabūsu jau redigēto produktu šajā funkcijā kā argumentu
+	@PostMapping("/update")
+	public String postUpdateProductById(@RequestParam(name = "id") int id, Product product) {
+		
+		for(Product tempP : allProducts) {
+			if(tempP.getId() == id) {
+				//TODO pārbaudīt, vai vispār ir jāmaina
+				tempP.setTitle(product.getTitle());
+				tempP.setDescription(product.getDescription());
+				tempP.setPrice(product.getPrice());
+				tempP.setCategory(product.getCategory());
+				tempP.setQuantity(product.getQuantity());
+			}
+		}
+		return "redirect:/getallproducts";
+	}
+	
+	
+	//izveidot postmapping funkciju uz /update/id
+	//funkciajs deklarcija ar @PathVariable, product objekts pec updeitta
+	//saglabat updeitoto produktu saraksta
+	//redirect uz getallproduct endpointu
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
