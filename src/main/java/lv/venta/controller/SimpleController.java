@@ -81,6 +81,7 @@ public class SimpleController {
 	@GetMapping("/add") //localhost:8080/add
 	public String getAddProduct(Model model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("categories", Category.values());
 		return "add-one-product";
 	}
 	

@@ -7,7 +7,7 @@
 		<input type="text" th:field="*{title}"/> 
 		<p>Ievadi cenu</p>
 		<input type="text" th:field="*{price}"/> 
-		<p>Ievadi kategoriju</p>
+		<p>Ievadi kategoriju</p> 
 		<select class="form-control" id="dropDownList">
 		    <option value="0">select option</option>
 		    <option th:each="category : ${categories}" th:value="${category}" th:text="${category}" th:field="*{category}"></option>
