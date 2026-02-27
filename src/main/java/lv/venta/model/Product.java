@@ -52,12 +52,12 @@ public class Product {
 	
 	public Product()
 	{
-		setId();
+		/*setId();
 		setTitle("Galds");
 		setPrice(78.99f);
 		setDescription("Brūns un liels");
 		setCategory(Category.other);
-		setQuantity(4);
+		setQuantity(4);*/
 	}
 	
 	public Product(String inputTitle, float inputPrice, String inputDescription, Category inputCategory,
