@@ -21,7 +21,7 @@ public class DemoApplication {
 	@Bean
 	public CommandLineRunner saveDataInDB(_ProductRepo prodRepo) {
 		return new CommandLineRunner() {
-			
+			//crudrepository f-jas
 			@Override
 			public void run(String... args) throws Exception {
 				Product p1 = new Product("Ābols", 0.99f, "Salds un garšīgs", Category.fruit, 10);
@@ -41,6 +41,7 @@ public class DemoApplication {
 				Product productForUpdate = prodRepo.findById(2).get();
 				productForUpdate.setPrice(9.99f);
 				prodRepo.save(productForUpdate);
+				System.out.println("Visi produkti pec 1.dzesanas un 2.redigesanas");
 			}
 		};
 	}
