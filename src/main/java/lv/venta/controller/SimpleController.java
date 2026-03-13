@@ -163,7 +163,26 @@ public class SimpleController {
 		return "redirect:/getallproducts";
 	}
 	
+	@GetMapping("/remove/{id}")//localhost:8080/remove/1
+	public String getRemoveProductById(@PathVariable(name = "id") int id, Model model) {
+		if(id < 0) {
+			model.addAttribute("package", "Produkts ar tādu id neeksistē");
+			return "error-page";
+		}
+		
+		for(Product tempP : allProducts) {
+			if(tempP.getId() == id) {
+				allProducts.remove(tempP);
+				model.addAttribute("package", allProducts);
+				return "show-all-products";
+			}
+		}
+		
+		model.addAttribute("package", "Produkts ar tādu id neeksistē");
+		return "error-page";
+	}
 	
+	//TODO
 	//izveidot postmapping funkciju uz /update/id
 	//funkciajs deklarcija ar @PathVariable, product objekts pec updeitta
 	//saglabat updeitoto produktu saraksta
