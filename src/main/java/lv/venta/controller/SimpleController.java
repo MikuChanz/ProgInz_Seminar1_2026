@@ -124,9 +124,9 @@ public class SimpleController {
 	
 	
 	//izveidot getmapping funkciju uz /update/id
-	@GetMapping("/update")//localhost:8080/update?id=1
+	@GetMapping("/update/{id}")//localhost:8080/update/1
 	// funkcijas deklarācija ar @PathVariable un Model
-	public String getUpdateProductById(@RequestParam(name = "id") int id, Model model)
+	public String getUpdateProductById(@PathVariable(name = "id") int id, Model model)
 	{
 		// parliecinaties, ka id ir pozitīvs, ja nav, tad uz error lapu parmest
 		if(id < 0) {
@@ -147,8 +147,8 @@ public class SimpleController {
 	}
 	
 	//dabūsu jau redigēto produktu šajā funkcijā kā argumentu
-	@PostMapping("/update")
-	public String postUpdateProductById(@RequestParam(name = "id") int id, Product product) {
+	@PostMapping("/update/{id}")
+	public String postUpdateProductById(@PathVariable(name = "id") int id, Product product) {
 		
 		for(Product tempP : allProducts) {
 			if(tempP.getId() == id) {
