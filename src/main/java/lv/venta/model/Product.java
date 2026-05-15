@@ -19,7 +19,7 @@ public class Product {
 	@Column(name = "Price")
 	private float price;
 	
-	@Column(name = "Title")
+	@Column(name = "Title", unique = true)
 	private String title;
 	
 	@Column(name = "Category")

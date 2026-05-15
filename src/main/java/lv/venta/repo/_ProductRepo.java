@@ -6,4 +6,6 @@ import lv.venta.model.Product;
 
 public interface _ProductRepo extends CrudRepository<Product, Integer>{
 	
+	public abstract boolean existsByTitle(String title);
+	
 }
